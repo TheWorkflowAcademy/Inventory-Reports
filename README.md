@@ -16,3 +16,5 @@ In the first Query, no table aliases are given. Zoho does allow this. Instead of
 ### To Implement
 Use the `warehouse-inventory-count.sql` to create the base table. Then, use `warehouse-valuation.sql` on top of that to bring in the cost and price information, aggregate inventory totals by Item (SKU), and create a better-looking finished product with which you can create nice graphics and reports. Again, the table names are pretty general but should also be easily adaptable and understood.
 
+### Bonus Reports
+Once you have a base report of all your inventory, think of all the other cool dashboards you could build! With the `Items` info joined in, you can also filter by Preferred Vendor, by Customers, Commissionable vs. Non-Commissionable, etc. You could make charts showing which items move around the most or are sold the quickest. The specific use-case for these two SQL queries is an inventory valuation by warehouse, but these tables provide the capability to build so many more useful reports!
