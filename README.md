@@ -1,4 +1,4 @@
-#Inventory Reporting in Zoho Analytics
+# Inventory Reporting in Zoho Analytics
 These 2 SQL Queries are to build an inventory valuation report by warehouse, but they can be easily adapted to run just about any kind of Inventory Report you need.
 
 ## Core Idea
