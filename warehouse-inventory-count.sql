@@ -3,8 +3,9 @@ SELECT
 		 "Purchase Order Items"."Warehouse ID" as "Warehouse ID",
 		 "Purchase Order Items"."Created Time" as 'Date',
 		 "Purchase Order Items"."Quantity" as "Quantity In",
-		 NULL as "Quantity Out",
-		 NULL as "Committed Stock"
+		 0 as "Quantity Out",
+		 0 as "Committed Stock",
+		 'Purchase Received Item' as 'Type'
 FROM  "Purchase Order Items"
 JOIN "Purchase Orders" ON "Purchase Orders"."Purchase Order ID"  = "Purchase Order Items"."Purchase Order ID" 
 LEFT JOIN "Purchase Receive Items" ON "Purchase Receive Items"."Purchase Order Item ID"  = "Purchase Order Items"."Item ID"  
@@ -22,8 +23,9 @@ UNION ALL
 ),
 		 "Items"."Created Time",
 		 "Items"."Opening Stock" as "Quantity In",
-		 NULL as "Quantity Out",
-		 NULL as "Committed Stock"
+		 0 as "Quantity Out",
+		 0 as "Committed Stock",
+		 'Initial Stock' as 'Type'
 FROM  "Items" 
 UNION ALL
  SELECT
@@ -31,8 +33,9 @@ UNION ALL
 		 "Credit Note Items"."Warehouse ID" as "Warehouse ID",
 		 "Credit Note Items"."Created Time",
 		 "Credit Note Items"."Quantity",
-		 NULL as "Quantity Out",
-		 NULL as "Committed Stock"
+		 0 as "Quantity Out",
+		 0 as "Committed Stock",
+		 'Credit Note Item' as 'Type'
 FROM  "Credit Note Items"
 LEFT JOIN "Credit Notes" ON "Credit Note Items"."CreditNotes ID"  = "Credit Notes"."CreditNotes ID"  
 WHERE	 "Credit Notes"."Credit Note Status"  not in ( 'Draft'  , 'Void'  )
@@ -41,9 +44,10 @@ UNION ALL
 		 "Invoice Items"."Product ID" as "Item ID",
 		 "Invoice Items"."Warehouse ID" as "Warehouse ID",
 		 "Invoice Items"."Created Time",
-		 NULL as "Quantity In",
+		 0 as "Quantity In",
 		 "Invoice Items"."Quantity" as "Quantity Out",
-		 NULL as "Committed Stock"
+		 0 as "Committed Stock",
+		 'Invoice Item' as 'Type'
 FROM  "Invoice Items"
 LEFT JOIN "Invoices" ON "Invoice Items"."Invoice ID"  = "Invoices"."Invoice ID"  
 WHERE	 "Invoices"."Invoice Status"  not in ( 'Draft'  , 'Void'  )
@@ -52,9 +56,10 @@ UNION ALL
 		 "Vendor Credit Items"."Product ID",
 		 "Vendor Credit Items"."Warehouse ID",
 		 "Vendor Credit Items"."Created Time",
-		 NULL as "Quantity In",
+		 0 as "Quantity In",
 		 "Vendor Credit Items"."Quantity" as "Quantity Out",
-		 NULL as "Committed Stock"
+		 0 as "Committed Stock",
+		 'Vendor Credit Item' as 'Type'
 FROM  "Vendor Credit Items"
 JOIN "Vendor Credits" ON "Vendor Credits"."Vendor Credit ID"  = "Vendor Credit Items"."Vendor Credit ID"  
 UNION ALL
@@ -64,16 +69,18 @@ UNION ALL
 		 "Inventory Adjustment Items"."Created Time",
 		 if("Inventory Adjustment Items"."Quantity Adjusted"  > 0, "Inventory Adjustment Items"."Quantity Adjusted", 0) as "Quantity In",
 		 if("Inventory Adjustment Items"."Quantity Adjusted"  < 0, -1 * "Inventory Adjustment Items"."Quantity Adjusted", 0) as "Quantity Out",
-		 NULL as "Committed Stock"
+		 0 as "Committed Stock",
+		 'Inventory Adjustment Item' as 'Type'
 FROM  "Inventory Adjustment Items" 
 UNION ALL
  SELECT
 		 "Sales Order Items"."Product ID",
 		 "Sales Order Items"."Warehouse ID",
 		 "Sales Order Items"."Created Time",
-		 NULL as "Quantity In",
-		 NULL as "Quantity Out",
-		 "Sales Order Items"."Quantity" as "Committed Stock"
+		 0 as "Quantity In",
+		 0 as "Quantity Out",
+		 "Sales Order Items"."Quantity" as "Committed Stock",
+		 'Sales Order Item' as 'Type'
 FROM  "Sales Order Items"
 LEFT JOIN "Sales Order Invoice" ON "Sales Order Invoice"."Sales order ID"  = "Sales Order Items"."Sales order ID"  
 WHERE	 "Sales Order Invoice"."Sales order ID"  is null
