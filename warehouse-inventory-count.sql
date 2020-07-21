@@ -82,5 +82,5 @@ UNION ALL
 		 "Sales Order Items"."Quantity" as "Committed Stock",
 		 'Sales Order Item' as 'Type'
 FROM  "Sales Order Items"
-LEFT JOIN "Sales Order Invoice" ON "Sales Order Invoice"."Sales order ID"  = "Sales Order Items"."Sales order ID"  
-WHERE	 "Sales Order Invoice"."Sales order ID"  is null
+LEFT JOIN "Sales Orders" ON "Sales Orders"."Sales order ID"  = "Sales Order Items"."Sales order ID"  
+WHERE	 "Sales Orders"."Status"  NOT IN ('void','invoiced')
